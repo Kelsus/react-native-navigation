@@ -324,7 +324,7 @@
       if (icon && icon != (id)[NSNull null])
       {
         iconImage = [RCTConvert UIImage:icon];
-        iconImage = [[self image:iconImage withColor:self.tabBar.tintColor] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+        iconImage = [[self image:iconImage withColor:self.tabBar.unselectedItemTintColor] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
         viewController.tabBarItem.image = iconImage;
       
       }
