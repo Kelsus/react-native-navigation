@@ -156,7 +156,7 @@
     id icon = tabItemLayout[@"props"][@"icon"];
     if (icon)
     {
-      iconImage = [RCTConvert UIImage:icon];
+      iconImage = [[RCTConvert UIImage:icon] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
       if (buttonColor)
       {
         iconImage = [[self image:iconImage withColor:buttonColor] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
@@ -165,7 +165,7 @@
     UIImage *iconImageSelected = nil;
     id selectedIcon = tabItemLayout[@"props"][@"selectedIcon"];
     if (selectedIcon) {
-      iconImageSelected = [RCTConvert UIImage:selectedIcon];
+      iconImageSelected = [[RCTConvert UIImage:selectedIcon] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     } else {
       iconImageSelected = [RCTConvert UIImage:icon];
     }
@@ -321,19 +321,22 @@
     {
       UIImage *iconImage = nil;
       id icon = actionParams[@"icon"];
+      UIImage *iconImageSelected = nil;
+      id selectedIcon = actionParams[@"selectedIcon"];
       if (icon && icon != (id)[NSNull null])
       {
         iconImage = [RCTConvert UIImage:icon];
-        iconImage = [[self image:iconImage withColor:self.tabBar.tintColor] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-        viewController.tabBarItem.image = iconImage;
-      
+        //        iconImage = [[self image:iconImage withColor:self.tabBar.tintColor] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+        viewController.tabBarItem.image = [iconImage imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+        
       }
-      UIImage *iconImageSelected = nil;
-      id selectedIcon = actionParams[@"selectedIcon"];
+      
       if (selectedIcon && selectedIcon != (id)[NSNull null])
       {
-        iconImageSelected = [RCTConvert UIImage:selectedIcon];
+        iconImageSelected = [[RCTConvert UIImage:selectedIcon] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
         viewController.tabBarItem.selectedImage = iconImageSelected;
+      } else {
+        viewController.tabBarItem.selectedImage =  [[self image:iconImage withColor:self.tabBar.tintColor] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
       }
     }
   }
