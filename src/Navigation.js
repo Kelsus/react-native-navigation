@@ -123,6 +123,14 @@ function dismissLightBox(params = {}) {
   return platformSpecific.dismissLightBox(params);
 }
 
+function showCustomView(params = {}) {
+  return platformSpecific.showCustomView(params);
+}
+
+function dismissCustomView() {
+  return platformSpecific.dismissCustomView();
+}
+
 function showInAppNotification(params = {}) {
   return platformSpecific.showInAppNotification(params);
 }
@@ -183,6 +191,8 @@ export default {
   dismissAllModals: dismissAllModals,
   showSnackbar: showSnackbar,
   showLightBox: showLightBox,
+  showCustomView: showCustomView,
+  dismissCustomView: dismissCustomView,
   dismissLightBox: dismissLightBox,
   showInAppNotification: showInAppNotification,
   dismissInAppNotification: dismissInAppNotification,

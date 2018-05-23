@@ -278,7 +278,15 @@ var Controllers = {
     },
     dismissAllControllers: function(animationType = 'slide-down') {
       RCCManager.dismissAllControllers(animationType);
-    }
+    },
+
+    showCustomView: function(params) {
+      console.log('showCustomView lib//////////', params);
+      RCCManager.showCustomView(params);
+    },
+    dismissCustomView: function() {
+      RCCManager.dismissCustomView();
+    },
   },
 
   Notification: {

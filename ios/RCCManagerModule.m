@@ -12,7 +12,7 @@
 #import "RCTHelpers.h"
 
 #define kSlideDownAnimationDuration 0.35
-
+const NSInteger kCustomViewTag = 0x101011;
 typedef NS_ENUM(NSInteger, RCCManagerModuleErrorCode)
 {
     RCCManagerModuleCantCreateControllerErrorCode   = -100,
@@ -324,6 +324,36 @@ RCT_EXPORT_METHOD(
                   modalDismissLightBox)
 {
     [RCCLightBox dismiss];
+}
+
+RCT_EXPORT_METHOD(
+                  showCustomView:(NSDictionary*)params)
+{
+
+    RCTRootView* reactView = [[RCTRootView alloc] initWithBridge:[[RCCManager sharedInstance] getBridge] moduleName:params[@"component"] initialProperties:params[@"passProps"]];
+    NSDictionary* frame = params[@"frame"];
+    
+    float x = [frame[@"x"] floatValue];
+    float y = [frame[@"y"] floatValue];
+    float width = [frame[@"width"] floatValue];
+    float height = [frame[@"height"] floatValue];
+    
+    CGRect rect = CGRectMake(x, y, width, height);
+    UIView *customView = [[UIView alloc] initWithFrame:rect];
+//     [customView setBackgroundColor:[UIColor yellowColor]];
+    [customView addSubview:reactView];
+    [customView setTag:kCustomViewTag];
+    id<UIApplicationDelegate> appDelegate = [UIApplication sharedApplication].delegate;
+    [appDelegate.window.rootViewController.view addSubview:customView];
+    
+}
+
+RCT_EXPORT_METHOD(
+                  dismissCustomView)
+{
+    id<UIApplicationDelegate> appDelegate = [UIApplication sharedApplication].delegate;
+    UIView *customView = [appDelegate.window.rootViewController.view viewWithTag:kCustomViewTag];
+    [customView removeFromSuperview];
 }
 
 RCT_EXPORT_METHOD(

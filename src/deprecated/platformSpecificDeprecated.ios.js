@@ -556,6 +556,45 @@ function dismissLightBox(params) {
   Modal.dismissLightBox();
 }
 
+function showCustomView(params) {
+  if (!params.screen) {
+    console.error('showCustomView(params): params.screen is required');
+    return;
+  }
+  const controllerID = _.uniqueId('controllerID');
+  const navigatorID = controllerID + '_nav';
+  const screenInstanceID = _.uniqueId('screenInstanceID');
+  const {
+    navigatorStyle,
+    navigatorButtons,
+    navigatorEventID
+  } = _mergeScreenSpecificSettings(params.screen, screenInstanceID, params);
+  const passProps = Object.assign({}, params.passProps);
+  passProps.navigatorID = navigatorID;
+  passProps.screenInstanceID = screenInstanceID;
+  passProps.navigatorEventID = navigatorEventID;
+  passProps.frame = params.frame;
+  params.navigationParams = {
+    screenInstanceID,
+    navigatorStyle,
+    navigatorButtons,
+    navigatorEventID,
+    navigatorID
+  };
+
+  savePassProps(params);
+
+  Modal.showCustomView({
+    component: params.screen,
+    frame: params.frame,
+    passProps: passProps
+  });
+}
+
+function dismissCustomView() {
+  Modal.dismissCustomView();
+}
+
 function showInAppNotification(params) {
   if (!params.screen) {
     console.error('showInAppNotification(params): params.screen is required');
@@ -652,6 +691,8 @@ export default {
   dismissAllModals,
   showLightBox,
   dismissLightBox,
+  showCustomView,
+  dismissCustomView,
   showInAppNotification,
   dismissInAppNotification,
   navigatorSetButtons,

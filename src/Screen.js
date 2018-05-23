@@ -48,6 +48,14 @@ class Navigator {
     return Navigation.showLightBox(params);
   }
 
+   dismissLightBox() {
+    return Navigation.dismissLightBox();
+  }
+
+  showCustomView(params = {}) {
+    return Navigation.showCustomView(params = {});
+  }
+
   dismissModal(params = {}) {
     return Navigation.dismissModal(params);
   }
