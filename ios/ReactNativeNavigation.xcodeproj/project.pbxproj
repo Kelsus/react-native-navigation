@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1A41EA2B20BDDAE70005B75C /* RCCCustomView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A41EA2A20BDDAE70005B75C /* RCCCustomView.m */; };
 		260804DB1CE0D9D20094DBA1 /* RCCToolBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 260804DA1CE0D9D20094DBA1 /* RCCToolBar.m */; };
 		261108801E6C495400BF5D98 /* UIViewController+Rotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 2611087F1E6C495400BF5D98 /* UIViewController+Rotation.m */; };
 		26714EAC1EB0E9D3009F4D52 /* RCCCustomTitleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 26714EAB1EB0E9D3009F4D52 /* RCCCustomTitleView.m */; };
@@ -51,6 +52,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		1A41EA2920BDDAE70005B75C /* RCCCustomView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RCCCustomView.h; sourceTree = "<group>"; };
+		1A41EA2A20BDDAE70005B75C /* RCCCustomView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RCCCustomView.m; sourceTree = "<group>"; };
 		260804D91CE0D9D20094DBA1 /* RCCToolBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCCToolBar.h; sourceTree = "<group>"; };
 		260804DA1CE0D9D20094DBA1 /* RCCToolBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCCToolBar.m; sourceTree = "<group>"; };
 		2611087E1E6C495400BF5D98 /* UIViewController+Rotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIViewController+Rotation.h"; path = "../UIViewController+Rotation.h"; sourceTree = "<group>"; };
@@ -221,6 +224,8 @@
 				CC84A19A1C1A0C4E00B3A6A2 /* RCCTabBarController.m */,
 				CC84A19B1C1A0C4E00B3A6A2 /* RCCViewController.h */,
 				CC84A19C1C1A0C4E00B3A6A2 /* RCCViewController.m */,
+				1A41EA2920BDDAE70005B75C /* RCCCustomView.h */,
+				1A41EA2A20BDDAE70005B75C /* RCCCustomView.m */,
 				D84813171C8C5EB700051BAF /* RCCLightBox.h */,
 				D84813181C8C5EB700051BAF /* RCCLightBox.m */,
 				D800E8171CFED1DB004A187F /* RCCExternalViewControllerProtocol.h */,
@@ -308,6 +313,7 @@
 			files = (
 				D85082EA1CBCF54200FDB961 /* TheSidebarController.m in Sources */,
 				CC84A1A01C1A0C4E00B3A6A2 /* RCCNavigationController.m in Sources */,
+				1A41EA2B20BDDAE70005B75C /* RCCCustomView.m in Sources */,
 				2DCD499A1F33AAC30035123A /* RCCCustomBarButtonItem.m in Sources */,
 				D83514F61D29719A00D53758 /* RCCNotification.m in Sources */,
 				CC84A19F1C1A0C4E00B3A6A2 /* RCCManagerModule.m in Sources */,
