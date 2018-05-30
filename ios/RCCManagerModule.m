@@ -328,33 +328,36 @@ RCT_EXPORT_METHOD(
 
     RCT_EXPORT_METHOD(
                       showCustomView:(NSDictionary*)params)
-    {
-        
-        //    RCTRootView* reactView = [[RCTRootView alloc] initWithBridge:[[RCCManager sharedInstance] getBridge] moduleName:params[@"component"] initialProperties:params[@"passProps"]];
-        //    NSDictionary* frame = params[@"frame"];
-        //
-        //    float x = [frame[@"x"] floatValue];
-        //    float y = [frame[@"y"] floatValue];
-        //    float width = [frame[@"width"] floatValue];
-        //    float height = [frame[@"height"] floatValue];
-        //
-        //    CGRect rect = CGRectMake(x, y, width, height);
-        //    UIView *customView = [[UIView alloc] initWithFrame:rect];
-        ////     [customView setBackgroundColor:[UIColor yellowColor]];
-        //    [customView addSubview:reactView];
-        //    [customView setTag:kCustomViewTag];
-        //    id<UIApplicationDelegate> appDelegate = [UIApplication sharedApplication].delegate;
-        //    [appDelegate.window.rootViewController.view addSubview:customView];
-        [RCCCustomView showWithParams:params];
-        
+{
+    BOOL showView = YES;
+    if([[[RCCManager sharedInstance] getAppWindow].rootViewController isKindOfClass:[RCCTabBarController class]]) {
+        RCCTabBarController* tabBarController = (RCCTabBarController*)[[RCCManager sharedInstance] getAppWindow].rootViewController;
+        if(tabBarController.selectedIndex == 2) {
+            showView = NO;
+        } else {
+            if([[tabBarController childViewControllers] count] > 0) {
+                if([[[tabBarController childViewControllers] firstObject] isKindOfClass:[RCCNavigationController class]]) {
+                    RCCNavigationController* navigationController = (RCCNavigationController*) [[tabBarController childViewControllers] firstObject];
+                    if([[navigationController childViewControllers] count] > 0) {
+                        if([[[navigationController childViewControllers] lastObject] isKindOfClass:[RCCViewController class]]) {
+                            RCCViewController* viewController = (RCCViewController*)[[navigationController childViewControllers] lastObject];
+                            if(viewController.navigatorStyle[@"tabBarHidden"]) {
+                                showView = NO;
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
+    if(showView) {
+        [RCCCustomView showWithParams:params];
+    }
+}
     
     RCT_EXPORT_METHOD(
                       dismissCustomView)
     {
-        //    id<UIApplicationDelegate> appDelegate = [UIApplication sharedApplication].delegate;
-        //    UIView *customView = [appDelegate.window.rootViewController.view viewWithTag:kCustomViewTag];
-        //    [customView removeFromSuperview];
         [RCCCustomView dismiss];
     }
 
