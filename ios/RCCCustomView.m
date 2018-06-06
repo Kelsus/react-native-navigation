@@ -17,6 +17,7 @@ const NSInteger kCustomViewTag = 0x101011;
     
 +(void)showWithParams:(NSDictionary*)params
     {
+        [self dismiss];
         RCTRootView* reactView = [[RCTRootView alloc] initWithBridge:[[RCCManager sharedInstance] getBridge] moduleName:params[@"component"] initialProperties:params[@"passProps"]];
         NSDictionary* frame = params[@"frame"];
         
