@@ -16,23 +16,27 @@ const NSInteger kCustomViewTag = 0x101011;
 @implementation RCCCustomView : NSObject
     
 +(void)showWithParams:(NSDictionary*)params
-    {
-        [self dismiss];
-        RCTRootView* reactView = [[RCTRootView alloc] initWithBridge:[[RCCManager sharedInstance] getBridge] moduleName:params[@"component"] initialProperties:params[@"passProps"]];
-        NSDictionary* frame = params[@"frame"];
-        
+{
+    //        [self dismiss];
+    id<UIApplicationDelegate> appDelegate = [UIApplication sharedApplication].delegate;
+    UIView *customView = [appDelegate.window.rootViewController.view viewWithTag:kCustomViewTag];
+    RCTRootView* reactView = [[RCTRootView alloc] initWithBridge:[[RCCManager sharedInstance] getBridge] moduleName:params[@"component"] initialProperties:params[@"passProps"]];
+    NSDictionary* frame = params[@"frame"];
+    if(customView == nil){
         float x = [frame[@"x"] floatValue];
         float y = [frame[@"y"] floatValue];
         float width = [frame[@"width"] floatValue];
         float height = [frame[@"height"] floatValue];
         
         CGRect rect = CGRectMake(x, y, width, height);
-        UIView *customView = [[UIView alloc] initWithFrame:rect];
+        customView = [[UIView alloc] initWithFrame:rect];
         [customView addSubview:reactView];
         [customView setTag:kCustomViewTag];
-        id<UIApplicationDelegate> appDelegate = [UIApplication sharedApplication].delegate;
         [appDelegate.window.rootViewController.view addSubview:customView];
+    } else {
+        [customView addSubview:reactView];
     }
+}
     
 +(void)dismiss
     {
