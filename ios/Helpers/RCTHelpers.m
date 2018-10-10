@@ -205,4 +205,25 @@
     return [NSString stringWithFormat:@"%lld", milliseconds];
 }
 
++(UIImage*) convertIcon:(id)icon {
+    if(icon[@"remoteUrl"] != nil) {
+        NSURL *url = [NSURL URLWithString:(NSString*)icon[@"uri"]];
+        if (url && url.scheme && url.host) {
+            NSData * imageData = [[NSData alloc] initWithContentsOfURL:url];
+            UIImage* tempImage = [UIImage imageWithData: imageData];
+            CGFloat width = 0;
+            CGFloat height = 0;
+            if(icon[@"width"] != nil) width = [icon[@"width"] floatValue];
+            if(icon[@"height"] != nil) height = [icon[@"height"] floatValue];
+            CGSize size = CGSizeMake(width, height);
+            UIGraphicsBeginImageContextWithOptions(size, NO, 0);
+            [tempImage drawInRect:CGRectMake(0, 0, size.width, size.height)];
+            UIImage *destImage = UIGraphicsGetImageFromCurrentImageContext();
+            UIGraphicsEndImageContext();
+            return destImage;
+        }
+    }
+    return [RCTConvert UIImage:icon];
+}
+
 @end

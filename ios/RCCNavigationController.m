@@ -346,7 +346,7 @@ NSString const *CALLBACK_ASSOCIATED_ID = @"RCCNavigationController.CALLBACK_ASSO
     NSString *title = button[@"title"];
     UIImage *iconImage = nil;
     id icon = button[@"icon"];
-    if (icon) iconImage = [RCTConvert UIImage:icon];
+    if (icon) iconImage = [RCTHelpers convertIcon:icon];
     NSString *__nullable component = button[@"component"];
 
     UIBarButtonItem *barButtonItem;

@@ -325,12 +325,12 @@
       id selectedIcon = actionParams[@"selectedIcon"];
       if (icon && icon != (id)[NSNull null])
       {
-        iconImage = [self convertIcon:icon];
+        iconImage = [RCTHelpers convertIcon:icon];
         viewController.tabBarItem.image = [iconImage imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
       }
       if (selectedIcon && selectedIcon != (id)[NSNull null])
       {
-        iconImageSelected = [[self convertIcon:selectedIcon] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+        iconImageSelected = [[RCTHelpers convertIcon:selectedIcon] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
         viewController.tabBarItem.selectedImage = iconImageSelected;
       } else {
         viewController.tabBarItem.selectedImage =  [[self image:iconImage withColor:self.tabBar.tintColor] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
@@ -363,28 +363,6 @@
   {
     completion();
   }
-}
-
--(UIImage*) convertIcon:(id)icon {
-  if(icon[@"remoteUrl"] != nil) {
-    NSURL *url = [NSURL URLWithString:(NSString*)icon[@"uri"]];
-    if (url && url.scheme && url.host) {
-      NSData * imageData = [[NSData alloc] initWithContentsOfURL:url];
-      UIImage* tempImage = [UIImage imageWithData: imageData];
-      CGFloat width = 0;
-      CGFloat height = 0;
-      if(icon[@"width"] != nil) width = [icon[@"width"] floatValue];
-      if(icon[@"height"] != nil) height = [icon[@"height"] floatValue];
-      CGSize size = CGSizeMake(width, height);
-      UIGraphicsBeginImageContextWithOptions(size, NO, 0);
-      [tempImage drawInRect:CGRectMake(0, 0, size.width, size.height)];
-      UIImage *destImage = UIGraphicsGetImageFromCurrentImageContext();
-      UIGraphicsEndImageContext();
-      return destImage;
-    }
-  }
-  return [RCTConvert UIImage:icon];
-  
 }
 
 +(void)sendScreenTabChangedEvent:(UIViewController*)viewController body:(NSDictionary*)body{
