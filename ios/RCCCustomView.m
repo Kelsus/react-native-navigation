@@ -34,7 +34,7 @@ const NSInteger kCustomViewTag = 0x101011;
         [customView setTag:kCustomViewTag];
         [appDelegate.window.rootViewController.view addSubview:customView];
     } else {
-        [customView addSubview:reactView];
+//        [customView addSubview:reactView];
     }
 }
     
