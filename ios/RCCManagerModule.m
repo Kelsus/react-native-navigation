@@ -340,8 +340,8 @@ RCT_EXPORT_METHOD(
             showView = NO;
         } else {
             if([[tabBarController childViewControllers] count] > 0) {
-                if([[[tabBarController childViewControllers] firstObject] isKindOfClass:[RCCNavigationController class]]) {
-                    RCCNavigationController* navigationController = (RCCNavigationController*) [[tabBarController childViewControllers] firstObject];
+                if([[tabBarController childViewControllers][tabBarController.selectedIndex] isKindOfClass:[RCCNavigationController class]]) {
+                    RCCNavigationController* navigationController = (RCCNavigationController*) [tabBarController childViewControllers][tabBarController.selectedIndex];
                     if([[navigationController childViewControllers] count] > 0) {
                         if([[[navigationController childViewControllers] lastObject] isKindOfClass:[RCCViewController class]]) {
                             RCCViewController* viewController = (RCCViewController*)[[navigationController childViewControllers] lastObject];
