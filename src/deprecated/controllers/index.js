@@ -281,7 +281,6 @@ var Controllers = {
     },
 
     showCustomView: function(params) {
-      console.log('showCustomView lib//////////', params);
       RCCManager.showCustomView(params);
     },
     dismissCustomView: function() {
