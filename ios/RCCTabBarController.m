@@ -156,8 +156,8 @@
     id icon = tabItemLayout[@"props"][@"icon"];
     if (icon)
     {
-      iconImage = [[RCTConvert UIImage:icon] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-      if (buttonColor)
+      iconImage = [[RCTHelpers convertIcon:icon] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+      if (buttonColor && !icon[@"remoteUrl"])
       {
         iconImage = [[self image:iconImage withColor:buttonColor] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
       }
@@ -165,7 +165,7 @@
     UIImage *iconImageSelected = nil;
     id selectedIcon = tabItemLayout[@"props"][@"selectedIcon"];
     if (selectedIcon) {
-      iconImageSelected = [[RCTConvert UIImage:selectedIcon] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+      iconImageSelected = [[RCTHelpers convertIcon:selectedIcon] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     } else {
       iconImageSelected = [RCTConvert UIImage:icon];
     }
