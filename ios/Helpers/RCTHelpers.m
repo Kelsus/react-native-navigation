@@ -205,23 +205,56 @@
     return [NSString stringWithFormat:@"%lld", milliseconds];
 }
 
++(UIImage *)makeRoundedImage:(UIImage *) image
+                      radius: (float) radius
+                 borderColor: (bool) borderColor;
+{
+    CALayer *imageLayer = [CALayer layer];
+    imageLayer.frame = CGRectMake(0, 0, image.size.width, image.size.height);
+    imageLayer.contents = (id) image.CGImage;
+    
+    imageLayer.masksToBounds = YES;
+    imageLayer.cornerRadius = radius;
+    if(borderColor) {
+        imageLayer.borderColor = [UIColor orangeColor].CGColor;
+        imageLayer.borderWidth = 3;
+    }
+    
+    
+    UIGraphicsBeginImageContext(image.size);
+    [imageLayer renderInContext:UIGraphicsGetCurrentContext()];
+    UIImage *roundedImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    return roundedImage;
+}
+
 +(UIImage*) convertIcon:(id)icon {
     if(icon[@"remoteUrl"] != nil) {
         NSURL *url = [NSURL URLWithString:(NSString*)icon[@"uri"]];
+        NSData * imageData;
         if (url && url.scheme && url.host) {
-            NSData * imageData = [[NSData alloc] initWithContentsOfURL:url];
-            UIImage* tempImage = [UIImage imageWithData: imageData];
-            CGFloat width = 0;
-            CGFloat height = 0;
-            if(icon[@"width"] != nil) width = [icon[@"width"] floatValue];
-            if(icon[@"height"] != nil) height = [icon[@"height"] floatValue];
-            CGSize size = CGSizeMake(width, height);
-            UIGraphicsBeginImageContextWithOptions(size, NO, 0);
-            [tempImage drawInRect:CGRectMake(0, 0, size.width, size.height)];
-            UIImage *destImage = UIGraphicsGetImageFromCurrentImageContext();
-            UIGraphicsEndImageContext();
-            return destImage;
+            imageData = [[NSData alloc] initWithContentsOfURL:url];
+        } else {
+            NSString *path = [url path];
+            imageData = [[NSFileManager defaultManager] contentsAtPath:path];
         }
+        UIImage* tempImage = [UIImage imageWithData: imageData];
+        if(icon[@"rounded"] != nil) {
+            bool border = icon[@"borderColor"] != nil;
+            tempImage =  [self makeRoundedImage:tempImage radius:tempImage.size.width/2 borderColor:border];
+        }
+        CGFloat width = 0;
+        CGFloat height = 0;
+        if(icon[@"width"] != nil) width = [icon[@"width"] floatValue];
+        if(icon[@"height"] != nil) height = [icon[@"height"] floatValue];
+        CGSize size = CGSizeMake(width, height);
+        UIGraphicsBeginImageContextWithOptions(size, NO, 0);
+        [tempImage drawInRect:CGRectMake(0, 0, size.width, size.height)];
+        UIImage *destImage = UIGraphicsGetImageFromCurrentImageContext();
+        UIGraphicsEndImageContext();
+        
+        return  destImage;
     }
     return [RCTConvert UIImage:icon];
 }
