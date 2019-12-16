@@ -211,15 +211,19 @@
 {
     CALayer *imageLayer = [CALayer layer];
     imageLayer.frame = CGRectMake(0, 0, image.size.width, image.size.height);
-    imageLayer.contents = (id) image.CGImage;
-    
     imageLayer.masksToBounds = YES;
     imageLayer.cornerRadius = radius;
     if(borderColor) {
-        imageLayer.borderColor = [UIColor orangeColor].CGColor;
-        imageLayer.borderWidth = 3;
+        imageLayer.borderColor = [UIColor colorWithRed:255.0/255.0 green:110.0/255.0 blue:0/255.0 alpha:1].CGColor;
+        imageLayer.borderWidth = 4;
     }
     
+    CALayer *subLayerLayer = [CALayer layer];
+    subLayerLayer.frame = CGRectMake(10, 10, image.size.width - 20, image.size.height - 20);
+    subLayerLayer.contents = (id) image.CGImage;
+    subLayerLayer.masksToBounds = YES;
+    subLayerLayer.cornerRadius = (subLayerLayer.frame.size.width)/2;
+    [imageLayer addSublayer:subLayerLayer];
     
     UIGraphicsBeginImageContext(image.size);
     [imageLayer renderInContext:UIGraphicsGetCurrentContext()];
